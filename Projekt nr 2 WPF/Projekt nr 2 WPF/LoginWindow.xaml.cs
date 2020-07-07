@@ -94,5 +94,12 @@ namespace Projekt_nr_2_WPF
 
             }
         }
+
+        private void regiButton_Click(object sender, RoutedEventArgs e)
+        {
+            RegisterWindow registerWindow = new RegisterWindow();
+            registerWindow.Show();
+            this.Hide();
+        }
     }
 }

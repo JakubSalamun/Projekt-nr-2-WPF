@@ -16,6 +16,7 @@
         <RadioButton x:Name="better" Content="Fajnie :3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,297,0,0"/>
         <Button x:Name="loginButton" Content="Logowanie" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Margin="49,128,0,0" Height="44" Click="loginButton_Click"/>
         <PasswordBox x:Name="userPassword" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="124,89,0,0" Width="120" Height="23"/>
+        <Button x:Name="regiButton" Content="Rejestracja" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Margin="49,183,0,0" Height="30" IsCancel="True" Click="regiButton_Click"/>
 
     </Grid>
 </Window>
