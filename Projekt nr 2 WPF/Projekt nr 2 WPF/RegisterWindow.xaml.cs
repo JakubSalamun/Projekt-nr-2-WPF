@@ -54,11 +54,69 @@ namespace Projekt_nr_2_WPF
 
         }
 
+        private bool check_password()
+        {
+            if (reg_password.Password!=reg_re_password.Password)
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool check_login()
+        {
+            if (reg_login.Text.Length>0)
+            {
+                sqlConnection.Open();
+                sql = "SELECT COUNT(*) FROM [dbo].[Users] WHERE [Imie]=@login";
+                SqlCommand sqlCmd = new SqlCommand(sql, sqlConnection);
+                sqlCmd.Parameters.AddWithValue("@login", reg_login.Text);
+                int resoult = (int)sqlCmd.ExecuteScalar();
+                
+                if (resoult>0)
+                {
+                    MessageBox.Show("Prosze zmienić login.Podany login jest zajęty", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return false;
+                }
+                sqlConnection.Close();
+                return true;
+                
+
+            }
+            return false;
+        }
+        private void Insert_new()
+        {
+            sqlConnection.Open();
+            sql = "insert into NowyDzien.dbo.Users([idUser],[Imie],[Nazwisko],[uPassword])" +
+                "values(@id,@login,@last_name,@password)";
+            SqlCommand sqlCmd = new SqlCommand(sql, sqlConnection);
+            sqlCmd.Parameters.AddWithValue("@id",user_ID.Text);
+            sqlCmd.Parameters.AddWithValue("@login", reg_login.Text);
+            sqlCmd.Parameters.AddWithValue("@password", reg_password.Password);
+            sqlCmd.Parameters.AddWithValue("@last_name", reg_last_name.Text);
+            sqlCmd.ExecuteNonQuery();
+            MessageBox.Show("Witamy "+reg_login.Text+"!");
+            sqlConnection.Close();
+        }
+
+
+
         private void backLoginWindow_Click(object sender, RoutedEventArgs e)
         {
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
             this.Hide();
+        }
+
+        private void register_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (check_login()==true && check_password()==true)
+            {
+                Insert_new();
+                this.Hide();
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
         }
     }
 }
