@@ -25,6 +25,8 @@ namespace Projekt_nr_2_WPF
                         Connect Timeout=30;Encrypt=False;
                         TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         string sql;
+        static public string login_id_help { get; set; }
+
         public LoginWindow()
         {
             InitializeComponent();
@@ -50,8 +52,10 @@ namespace Projekt_nr_2_WPF
                         sqlCommand.Parameters.AddWithValue("@userID", userID.Text);
                         sqlCommand.Parameters.AddWithValue("@userPassword", userPassword.Password);
                         int results = (int)sqlCommand.ExecuteScalar();
+                        
                         if (results > 0)
                         {
+                            Help.user_help = userID.Text;
                             MainWindow mainWindow = new MainWindow();
                             mainWindow.Show();
                             this.Hide();
@@ -101,5 +105,6 @@ namespace Projekt_nr_2_WPF
             registerWindow.Show();
             this.Hide();
         }
+
     }
 }
