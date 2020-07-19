@@ -26,7 +26,7 @@ namespace Projekt_nr_2_WPF
                         Connect Timeout=30;Encrypt=False;
                         TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         string sql;
-        string mw_userID;
+        string mw_userID,help_dnia_tygodnia;
 
         DataTable dt = new DataTable("Info");
 
@@ -59,6 +59,7 @@ namespace Projekt_nr_2_WPF
             mw_userID = Help.user_help;
             combobox();
             combobox2();
+            combobox3();
             add_info();
 
 
@@ -133,16 +134,29 @@ namespace Projekt_nr_2_WPF
             plan_dnia2.Items.Add("24:00:00");
         }
 
+        private void combobox3()
+        {
+            plan_dnia3.Items.Add("Poniedzialek");
+            plan_dnia3.Items.Add("Wtorek");
+            plan_dnia3.Items.Add("Sroda");
+            plan_dnia3.Items.Add("Czwartek");
+            plan_dnia3.Items.Add("Piatek");
+            plan_dnia3.Items.Add("Sobota");
+            plan_dnia3.Items.Add("Niedziela");
+        }
 
 
 
         private void add_info()
         {
+            DateTime date_t = DateTime.Now;
+            help_dnia_tygodnia = date_t.DayOfWeek.ToString();
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID";
+            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien=@help_dnia_tygodnia";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
+            sqlCommand.Parameters.AddWithValue("@help_dnia_tygodnia", help_dnia_tygodnia);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
             
             dataAdapter.Fill(dataTable);
@@ -150,21 +164,50 @@ namespace Projekt_nr_2_WPF
             plan_dnia_dgv.ItemsSource = dt.DefaultView;
             sqlConnection.Close();
         }
+        private void poniedzialek()
+        {
+            sqlConnection.Open();
+            DataTable dataTable = new DataTable();
+            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Monday'";
+            SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
+            sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
+
+            dataAdapter.Fill(dataTable);
+            dt = dataTable;
+            plan_dnia_dgv_1.ItemsSource = dt.DefaultView;
+            sqlConnection.Close();
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            
+            poniedzialek();
+
+        }
+
+      
 
         private void user_add_info()
         {
+            DateTime dt = DateTime.Now;
+            help_dnia_tygodnia =dt.DayOfWeek.ToString();
             sqlConnection.Open();
-            sql = "INSERT INTO Czas(Czas_Od,Czas_Do,Czynnosc,Uzytkownik)"+
-                "VALUES (@czas_o,@czas_d,@czyn,@mw_userID)";
+            sql = "INSERT INTO Czas(Czas_Od,Czas_Do,Czynnosc,Uzytkownik,Dzien)"+
+                "VALUES (@czas_o,@czas_d,@czyn,@mw_userID,@help_dnia_tygodnia)";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@czas_o", text1.Text);
             sqlCommand.Parameters.AddWithValue("@czas_d", text2.Text);
             sqlCommand.Parameters.AddWithValue("@czyn", text3.Text);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
+            sqlCommand.Parameters.AddWithValue("@help_dnia_tygodnia", help_dnia_tygodnia);
             sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
 
 
         }
+
+   
     }
 }
