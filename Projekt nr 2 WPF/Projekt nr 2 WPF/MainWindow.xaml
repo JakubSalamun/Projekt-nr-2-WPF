@@ -6,26 +6,21 @@
         xmlns:local="clr-namespace:Projekt_nr_2_WPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBox x:Name="text1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="54" Margin="20,72,0,0"/>
-        <TextBox x:Name="text2" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="53" Margin="98,72,0,0"/>
-        <Button Content="Dodaj" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="445,111,0,0" Click="Button_Click"/>
-        <ComboBox x:Name="plan_dnia" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="20,108,0,0"/>
-        <ComboBox x:Name="plan_dnia2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="158,108,0,0">
-            <ComboBox Width="120"/>
+    <Grid Margin="-1,0,1,0">
+        <Button Content="Dodaj" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="532,114,0,0" Click="Add_Button_Click" Height="22"/>
+        <ComboBox x:Name="plan_dnia"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="135,112,0,0"/>
+        <ComboBox x:Name="plan_dnia2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="260,113,0,0">
+            
         </ComboBox>
-        <Label Content="-" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="78,69,0,0"/>
         <DataGrid x:Name="plan_dnia_dgv" HorizontalAlignment="Left" Height="234" VerticalAlignment="Top" Width="370" Margin="398,160,0,0"/>
-        <TextBox x:Name="text3" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="504" Margin="176,72,0,0"/>
+        <TextBox x:Name="text3" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" Margin="135,85,0,0"/>
         <DataGrid x:Name="plan_dnia_dgv_1" HorizontalAlignment="Left" Height="234" VerticalAlignment="Top" Width="370" Margin="28,160,0,0" IsReadOnly="True"/>
-        <Button x:Name="b_poniedzialek" Content="Poniedzialek" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82" Margin="10,10,0,0" Height="49" Click="Button_Click_1"/>
-        <Button x:Name="b_wtorek" Content="Wtorek" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Margin="116,10,0,0" Height="49" Click="b_wtorek_Click"/>
-        <Button x:Name="b_sroda" Content="Sroda" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82" Margin="227,10,0,0" Height="49" Click="b_sroda_Click"/>
-        <Button x:Name="b_czwartek" Content="Czwartek" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82" Margin="336,10,0,0" Height="49" Click="b_czwartek_Click"/>
-        <Button x:Name="b_piatek" Content="Piatek" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82" Margin="445,10,0,0" Height="49" Click="b_piatek_Click"/>
-        <Button x:Name="b_sobota" Content="Sobota" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82" Margin="563,10,0,0" Height="49" Click="b_sobota_Click"/>
-        <Button x:Name="b_niedziela" Content="Niedziela" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82" Margin="676,10,0,0" Height="49" Click="b_niedziela_Click"/>
-        <ComboBox x:Name="plan_dnia3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="298,108,0,0"/>
+        <Label Content="Czyność :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="79,81,0,0"/>
+        <Label x:Name="help_select_day" Content="Dziś" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,139,0,0"/>
+        <Label Content="Zaplanowano w :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="85,138,0,0"/>
+        <Label Content="Aktualny Dzień:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="470,136,0,0"/>
+        <ComboBox x:Name="plan_dnia3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="385,112,0,0" SelectionChanged="plan_dnia3_SelectionChanged"/>
+        <Label x:Name="help_select_day_2" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="567,136,0,0"/>
 
     </Grid>
 </Window>
