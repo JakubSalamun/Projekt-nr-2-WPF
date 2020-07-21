@@ -25,19 +25,13 @@ namespace Projekt_nr_2_WPF
         SqlConnection sqlConnection = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=NowyDzien;Integrated Security=True;
                         Connect Timeout=30;Encrypt=False;
                         TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-        string sql,sql_help;
+        string sql,sql_a;
         string mw_userID,help_dnia_tygodnia;
 
         DataTable dt = new DataTable("Info");
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            //int selectedIndex = plan_dnia.SelectedIndex;
-            //object selectedItem = plan_dnia.SelectedItem;
-            //int selectedIndex2 = plan_dnia2.SelectedIndex;
-            //object selectedItem2 = plan_dnia2.SelectedItem;
-
-            // if (selectedIndex>selectedIndex2||(selectedIndex==(-1) ||selectedIndex2==(-1)))
             if (plan_dnia.SelectedIndex.Equals(-1)||plan_dnia2.SelectedIndex.Equals(-1))
             {
                 MessageBox.Show("Prosze podać godzine!");
@@ -45,11 +39,10 @@ namespace Projekt_nr_2_WPF
            
             else
             {
-                //text1.Text = selectedItem.ToString();
-               // text2.Text = selectedItem2.ToString();
+                user_add_info();
+                add_info();
             }
-            user_add_info();
-            add_info();
+        
 
 
 
@@ -59,100 +52,72 @@ namespace Projekt_nr_2_WPF
         {
             InitializeComponent();
             mw_userID = Help.user_help;
+            plan_dnia3.SelectedItem = help_dnia_tygodnia;
             DateTime dt = DateTime.Now;
             help_dnia_tygodnia = dt.DayOfWeek.ToString();
             help_select_day_2.Content = dt.DayOfWeek.ToString();
 
-
             combobox();
             combobox2();
             combobox3();
-            plan_dnia.SelectedIndex = 34;
-            plan_dnia2.SelectedIndex = 34;
-            plan_dnia3.SelectedItem = help_dnia_tygodnia;
-
-
             add_info();
-
-
-
         }
     
         private void combobox()
         {
-            plan_dnia.Items.Add("07:00:00");
-            plan_dnia.Items.Add("07:30:00");
-            plan_dnia.Items.Add("08:00:00");
-            plan_dnia.Items.Add("08:30:00");
-            plan_dnia.Items.Add("09:00:00");
-            plan_dnia.Items.Add("09:30:00");
-            plan_dnia.Items.Add("10:00:00");
-            plan_dnia.Items.Add("10:30:00");
-            plan_dnia.Items.Add("11:00:00");
-            plan_dnia.Items.Add("11:30:00");
-            plan_dnia.Items.Add("12:00:00");
-            plan_dnia.Items.Add("12:30:00");
-            plan_dnia.Items.Add("13:00:00");
-            plan_dnia.Items.Add("13:30:00");
-            plan_dnia.Items.Add("14:00:00");
-            plan_dnia.Items.Add("14:30:00");
-            plan_dnia.Items.Add("15:00:00");
-            plan_dnia.Items.Add("15:30:00");
-            plan_dnia.Items.Add("16:00:00");
-            plan_dnia.Items.Add("16:30:00");
-            plan_dnia.Items.Add("17:00:00");
-            plan_dnia.Items.Add("17:30:00");
-            plan_dnia.Items.Add("18:00:00");
-            plan_dnia.Items.Add("18:30:00");
-            plan_dnia.Items.Add("19:00:00");
-            plan_dnia.Items.Add("19:30:00");
-            plan_dnia.Items.Add("20:00:00");
-            plan_dnia.Items.Add("20:30:00");
-            plan_dnia.Items.Add("21:00:00");
-            plan_dnia.Items.Add("21:30:00");
-            plan_dnia.Items.Add("22:00:00");
-            plan_dnia.Items.Add("22:30:00");
-            plan_dnia.Items.Add("23:00:00");
-            plan_dnia.Items.Add("23:0:00");
-            plan_dnia.Items.Add("00:00:00");
+
+            for (int i = 0; i < 24; i++)
+            {
+                for (int j = 0; j < 60; j++)
+                {
+                    if (j < 10)
+                    {
+                        plan_dnia.Items.Add(i + ":0" + j);
+                    }
+                    else
+                    {
+                        plan_dnia.Items.Add(i + ":" + j);
+                        if (j == 60)
+                        {
+                            j = 0;
+
+                            plan_dnia.Items.Add(i + ":" + j);
+                        }
+                    }
+                
+
+                }
+            }
+  
+           
         }
         private void combobox2()
         {
-            plan_dnia2.Items.Add("07:00:00");
-            plan_dnia2.Items.Add("07:30:00");
-            plan_dnia2.Items.Add("08:00:00");
-            plan_dnia2.Items.Add("08:30:00");
-            plan_dnia2.Items.Add("09:00:00");
-            plan_dnia2.Items.Add("09:30:00");
-            plan_dnia2.Items.Add("10:00:00");
-            plan_dnia2.Items.Add("10:30:00");
-            plan_dnia2.Items.Add("11:00:00");
-            plan_dnia2.Items.Add("11:30:00");
-            plan_dnia2.Items.Add("12:00:00");
-            plan_dnia2.Items.Add("12:30:00");
-            plan_dnia2.Items.Add("13:00:00");
-            plan_dnia2.Items.Add("13:30:00");
-            plan_dnia2.Items.Add("14:00:00");
-            plan_dnia2.Items.Add("14:30:00");
-            plan_dnia2.Items.Add("15:00:00");
-            plan_dnia2.Items.Add("15:30:00");
-            plan_dnia2.Items.Add("16:00:00");
-            plan_dnia2.Items.Add("16:30:00");
-            plan_dnia2.Items.Add("17:00:00");
-            plan_dnia2.Items.Add("17:30:00");
-            plan_dnia2.Items.Add("18:00:00");
-            plan_dnia2.Items.Add("18:30:00");
-            plan_dnia2.Items.Add("19:00:00");
-            plan_dnia2.Items.Add("19:30:00");
-            plan_dnia2.Items.Add("20:00:00");
-            plan_dnia2.Items.Add("20:30:00");
-            plan_dnia2.Items.Add("21:00:00");
-            plan_dnia2.Items.Add("21:30:00");
-            plan_dnia2.Items.Add("22:00:00");
-            plan_dnia2.Items.Add("22:30:00");
-            plan_dnia2.Items.Add("23:00:00");
-            plan_dnia2.Items.Add("23:30:00");
-            plan_dnia2.Items.Add("00:00:00");
+       
+            for (int i = 0; i < 24; i++)
+            {
+                for (int j = 0; j < 60; j++)
+                {
+                    if (j < 10)
+                    {
+                        plan_dnia2.Items.Add(i + ":0" + j);
+                    }
+                    else
+                    {
+                        plan_dnia2.Items.Add(i + ":" + j);
+                        if (j == 60)
+                        {
+                            j = 0;
+
+                            plan_dnia2.Items.Add(i + ":" + j);
+                        }
+                    }
+
+                }
+                
+
+
+            }
         }
 
         private void combobox3()
@@ -174,7 +139,7 @@ namespace Projekt_nr_2_WPF
             help_dnia_tygodnia = date_t.DayOfWeek.ToString();
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien=@help_dnia_tygodnia Order by Czas_Od";
+            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien=@help_dnia_tygodnia Order by Czas_Od";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             sqlCommand.Parameters.AddWithValue("@help_dnia_tygodnia", help_dnia_tygodnia);
@@ -335,32 +300,66 @@ namespace Projekt_nr_2_WPF
 
         }
 
+        private void Delete_click(object sender, RoutedEventArgs e)
+        {
+      
+               string delete_help;
+               
+                List<DataGridCellInfo> cell_infos = new List<DataGridCellInfo>();
+                for (int i = 0; i < plan_dnia_dgv.SelectedCells.Count; i++)
+                {
+                    cell_infos.Add(plan_dnia_dgv.SelectedCells[i]);
+                }
+
+                if (plan_dnia_dgv.SelectedCells.Count > 0)
+                {
+                    delete_help = (cell_infos[0].Column.GetCellContent(cell_infos[0].Item) as TextBlock).Text;
+                    sqlConnection.Open();
+                    sql = "DELETE from Czas where idPoryDnia=@help_delete";
+                    SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
+                    sqlCommand.Parameters.AddWithValue("@help_delete", Convert.ToInt32(delete_help));
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                    add_info();
+
+            }
+     
+        }
+
+
         private void user_add_info()
         {
-         
-            help_dnia_tygodnia = plan_dnia3.SelectedItem.ToString();
+            
+            
             sqlConnection.Open();
-            sql = "SELECT MAX(Czas_Do) From Czas where Dzien=@help_dnia_tygodnia";
-            SqlCommand sqlCommand1 = new SqlCommand(sql, sqlConnection);
-            sqlCommand1.Parameters.AddWithValue("@help_dnia_tygodnia", help_dnia_tygodnia);
 
-            string result=sqlCommand1.ExecuteScalar().ToString();
+            
+            sql_a = "SELECT Count(*) From Czas where Dzien=@dzien and Czas_Od=@czas_o";
+            SqlCommand sqlCommand1 = new SqlCommand(sql_a, sqlConnection);
+            sqlCommand1.Parameters.AddWithValue("@dzien", plan_dnia3.SelectedItem.ToString());
+            sqlCommand1.Parameters.AddWithValue("@czas_o", plan_dnia.SelectedItem.ToString());
+       
+            int exist_help = (int)sqlCommand1.ExecuteScalar();
+            if (exist_help>0)
+            {
+                MessageBox.Show("Masz juz coś zaplanowane o tej godzinie!");
+            }
+            
+            else
+            {
+                sql = "INSERT INTO Czas(Czas_Od,Czas_Do,Czynnosc,Uzytkownik,Dzien)" +
+               "VALUES (@czas_o,@czas_d,@czyn,@mw_userID,@dzien)";
+                SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
+                sqlCommand.Parameters.AddWithValue("@czas_o", plan_dnia.SelectedItem.ToString());
+                sqlCommand.Parameters.AddWithValue("@czas_d", plan_dnia2.SelectedItem.ToString());
+                sqlCommand.Parameters.AddWithValue("@czyn", text3.Text);
+                sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
+                sqlCommand.Parameters.AddWithValue("@dzien", plan_dnia3.SelectedItem.ToString());
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
 
-
-           
-
-            sql = "INSERT INTO Czas(Czas_Od,Czas_Do,Czynnosc,Uzytkownik,Dzien)"+
-                "VALUES (@czas_o,@czas_d,@czyn,@mw_userID,@help_dnia_tygodnia)";
-            SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@czas_o", plan_dnia.SelectedItem.ToString());
-            sqlCommand.Parameters.AddWithValue("@czas_d", plan_dnia2.SelectedItem.ToString());
-            sqlCommand.Parameters.AddWithValue("@czyn", text3.Text);
-            sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
-            sqlCommand.Parameters.AddWithValue("@help_dnia_tygodnia", help_dnia_tygodnia);
-            sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
-
-
         }
 
    
