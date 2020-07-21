@@ -39,13 +39,9 @@ namespace Projekt_nr_2_WPF
            
             else
             {
-                user_add_info();
-                add_info();
+                    user_add_info();
+                    add_info();  
             }
-        
-
-
-
         }
 
         public MainWindow()
@@ -93,7 +89,6 @@ namespace Projekt_nr_2_WPF
         }
         private void combobox2()
         {
-       
             for (int i = 0; i < 24; i++)
             {
                 for (int j = 0; j < 60; j++)
@@ -113,13 +108,13 @@ namespace Projekt_nr_2_WPF
                         }
                     }
 
+
                 }
-                
-
-
             }
+
         }
 
+     
         private void combobox3()
         {
             plan_dnia3.Items.Add("Monday");
@@ -329,17 +324,15 @@ namespace Projekt_nr_2_WPF
 
         private void user_add_info()
         {
-            
-            
             sqlConnection.Open();
-
-            
-            sql_a = "SELECT Count(*) From Czas where Dzien=@dzien and Czas_Od=@czas_o";
+            sql_a = "SELECT Count(*) From Czas where Dzien=@dzien and ((Czas_Od between @help_czas_od and @help_czas_do) or (Czas_Do between @help_czas_od and @help_czas_do))";
             SqlCommand sqlCommand1 = new SqlCommand(sql_a, sqlConnection);
+            sqlCommand1.Parameters.AddWithValue("@help_czas_od", plan_dnia.SelectedItem.ToString());
+            sqlCommand1.Parameters.AddWithValue("@help_czas_do", plan_dnia2.SelectedItem.ToString());
             sqlCommand1.Parameters.AddWithValue("@dzien", plan_dnia3.SelectedItem.ToString());
-            sqlCommand1.Parameters.AddWithValue("@czas_o", plan_dnia.SelectedItem.ToString());
-       
+            
             int exist_help = (int)sqlCommand1.ExecuteScalar();
+            
             if (exist_help>0)
             {
                 MessageBox.Show("Masz juz coś zaplanowane o tej godzinie!");
