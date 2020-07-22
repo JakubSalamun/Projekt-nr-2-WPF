@@ -42,15 +42,8 @@ namespace Projekt_nr_2_WPF
 
         public RegisterWindow()
         {
-
-
-
             InitializeComponent();
             id_generation();
-           
-
-
-
 
         }
 
@@ -114,8 +107,8 @@ namespace Projekt_nr_2_WPF
             {
                 Insert_new();
                 this.Hide();
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
+                LoginWindow login = new LoginWindow();
+                login.Show();
             }
         }
     }

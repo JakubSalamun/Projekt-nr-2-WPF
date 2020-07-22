@@ -7,13 +7,9 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="360" Width="300" MinWidth="200" MinHeight="200" ResizeMode="NoResize">
     <Grid Width="298" Height="358">
-        <Label Content="Login:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="49,52,0,0"/>
+        <Label Content="ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="49,52,0,0"/>
         <Label Content="Hasło:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="49,89,0,0"/>
-        <Label Content="Jak sie dziś czuejsz?" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="171,213,0,0"/>
         <TextBox Name="userID" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="120,54,50.4,0" HorizontalAlignment="Center"/>
-        <RadioButton x:Name="bad" Content="Źle -.-" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,239,0,0"/>
-        <RadioButton x:Name="ok" Content="Przeciętnie  :/" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,267,0,0"/>
-        <RadioButton x:Name="better" Content="Fajnie :3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,297,0,0"/>
         <Button x:Name="loginButton" Content="Logowanie" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Margin="49,128,0,0" Height="44" Click="loginButton_Click"/>
         <PasswordBox x:Name="userPassword" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="124,89,0,0" Width="120" Height="23"/>
         <Button x:Name="regiButton" Content="Rejestracja" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Margin="49,183,0,0" Height="30" IsCancel="True" Click="regiButton_Click"/>

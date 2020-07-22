@@ -32,15 +32,19 @@ namespace Projekt_nr_2_WPF
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (plan_dnia.SelectedIndex.Equals(-1)||plan_dnia2.SelectedIndex.Equals(-1))
+            if (plan_dnia.SelectedIndex.Equals(-1)||plan_dnia2.SelectedIndex.Equals(-1)||plan_dnia3.SelectedIndex.Equals(-1)||text3.Text=="")
             {
-                MessageBox.Show("Prosze podać godzine!");
+                MessageBox.Show("Prosze podać godzine oraz dzień + wypełnić pole czynności");
             }
-           
+            if (plan_dnia2.SelectedIndex<plan_dnia.SelectedIndex)
+            {
+                MessageBox.Show("Chyba coś źle zaznaczyłeś,spróbuj ponownie");
+            }
             else
             {
                     user_add_info();
-                    add_info();  
+                    add_info();
+                    help_data_grid();
             }
         }
 
@@ -113,8 +117,6 @@ namespace Projekt_nr_2_WPF
             }
 
         }
-
-     
         private void combobox3()
         {
             plan_dnia3.Items.Add("Monday");
@@ -149,7 +151,7 @@ namespace Projekt_nr_2_WPF
         {
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Monday'";
+            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Monday'";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
@@ -164,7 +166,7 @@ namespace Projekt_nr_2_WPF
         {
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Tuesday'";
+            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Tuesday'";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
@@ -179,7 +181,7 @@ namespace Projekt_nr_2_WPF
         {
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Wednesday'";
+            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Wednesday'";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
@@ -194,7 +196,7 @@ namespace Projekt_nr_2_WPF
         {
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Thursday'";
+            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Thursday'";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
@@ -209,7 +211,7 @@ namespace Projekt_nr_2_WPF
         {
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Friday'";
+            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Friday'";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
@@ -224,7 +226,7 @@ namespace Projekt_nr_2_WPF
         {
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Saturday'";
+            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Saturday'";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
@@ -239,7 +241,7 @@ namespace Projekt_nr_2_WPF
         {
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Sunday'";
+            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Sunday'";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
@@ -254,10 +256,95 @@ namespace Projekt_nr_2_WPF
 
         private void plan_dnia3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string gregi = e.Source.ToString();
+            help_data_grid();
+        }
+
+        private void Delete_click(object sender, RoutedEventArgs e)
+        {
+      
+               string delete_help;
+               
+                List<DataGridCellInfo> cell_infos = new List<DataGridCellInfo>();
+                for (int i = 0; i < plan_dnia_dgv.SelectedCells.Count; i++)
+                {
+                    cell_infos.Add(plan_dnia_dgv.SelectedCells[i]);
+                }
+
+                if (plan_dnia_dgv.SelectedCells.Count > 0)
+                {
+                    delete_help = (cell_infos[0].Column.GetCellContent(cell_infos[0].Item) as TextBlock).Text;
+                    sqlConnection.Open();
+                    sql = "DELETE from Czas where idPoryDnia=@help_delete";
+                    SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
+                    sqlCommand.Parameters.AddWithValue("@help_delete", Convert.ToInt32(delete_help));
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                    add_info();
+                     help_data_grid();
+
+                }
+
+                  List<DataGridCellInfo> cell_infos_2 = new List<DataGridCellInfo>();
+                  for (int i = 0; i < plan_dnia_dgv_1.SelectedCells.Count; i++)
+                  {
+                      cell_infos_2.Add(plan_dnia_dgv_1.SelectedCells[i]);
+
+                  }
+
+                  if (plan_dnia_dgv_1.SelectedCells.Count > 0)
+                  {
+                     delete_help = (cell_infos_2[0].Column.GetCellContent(cell_infos_2[0].Item) as TextBlock).Text;
+                     sqlConnection.Open();
+                     sql = "DELETE from Czas where idPoryDnia=@help_delete";
+                     SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
+                     sqlCommand.Parameters.AddWithValue("@help_delete", Convert.ToInt32(delete_help));
+                     sqlCommand.ExecuteNonQuery();
+                     sqlConnection.Close();
+                     add_info();
+                    help_data_grid();
+                  }
 
 
-            if (plan_dnia3.SelectedIndex==(0))
+        }
+
+
+        private void user_add_info()
+        {
+            sqlConnection.Open();
+            sql_a = "SELECT Count(*) From Czas where Dzien=@dzien and ((Czas_Od between @help_czas_od and @help_czas_do) or (Czas_Do between @help_czas_od and @help_czas_do))";
+            SqlCommand sqlCommand1 = new SqlCommand(sql_a, sqlConnection);
+            sqlCommand1.Parameters.AddWithValue("@help_czas_od", plan_dnia.SelectedItem.ToString());
+            sqlCommand1.Parameters.AddWithValue("@help_czas_do", plan_dnia2.SelectedItem.ToString());
+            sqlCommand1.Parameters.AddWithValue("@dzien", plan_dnia3.SelectedItem.ToString());
+            
+            int exist_help = (int)sqlCommand1.ExecuteScalar();
+            
+            if (exist_help>0)
+            {
+                MessageBox.Show("Masz juz coś zaplanowane o tej godzinie!");
+            }
+            
+            else
+            {
+                sql = "INSERT INTO Czas(Czas_Od,Czas_Do,Czynnosc,Uzytkownik,Dzien)" +
+               "VALUES (@czas_o,@czas_d,@czyn,@mw_userID,@dzien)";
+                SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
+                sqlCommand.Parameters.AddWithValue("@czas_o", plan_dnia.SelectedItem.ToString());
+                sqlCommand.Parameters.AddWithValue("@czas_d", plan_dnia2.SelectedItem.ToString());
+                sqlCommand.Parameters.AddWithValue("@czyn", text3.Text);
+                sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
+                sqlCommand.Parameters.AddWithValue("@dzien", plan_dnia3.SelectedItem.ToString());
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+            }
+
+            sqlConnection.Close();
+        }
+
+
+        private void help_data_grid()
+        {
+            if (plan_dnia3.SelectedIndex == (0))
             {
                 poniedzialek();
                 help_select_day.Content = "Poniedziałek";
@@ -295,66 +382,5 @@ namespace Projekt_nr_2_WPF
 
         }
 
-        private void Delete_click(object sender, RoutedEventArgs e)
-        {
-      
-               string delete_help;
-               
-                List<DataGridCellInfo> cell_infos = new List<DataGridCellInfo>();
-                for (int i = 0; i < plan_dnia_dgv.SelectedCells.Count; i++)
-                {
-                    cell_infos.Add(plan_dnia_dgv.SelectedCells[i]);
-                }
-
-                if (plan_dnia_dgv.SelectedCells.Count > 0)
-                {
-                    delete_help = (cell_infos[0].Column.GetCellContent(cell_infos[0].Item) as TextBlock).Text;
-                    sqlConnection.Open();
-                    sql = "DELETE from Czas where idPoryDnia=@help_delete";
-                    SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-                    sqlCommand.Parameters.AddWithValue("@help_delete", Convert.ToInt32(delete_help));
-                    sqlCommand.ExecuteNonQuery();
-                    sqlConnection.Close();
-                    add_info();
-
-            }
-     
-        }
-
-
-        private void user_add_info()
-        {
-            sqlConnection.Open();
-            sql_a = "SELECT Count(*) From Czas where Dzien=@dzien and ((Czas_Od between @help_czas_od and @help_czas_do) or (Czas_Do between @help_czas_od and @help_czas_do))";
-            SqlCommand sqlCommand1 = new SqlCommand(sql_a, sqlConnection);
-            sqlCommand1.Parameters.AddWithValue("@help_czas_od", plan_dnia.SelectedItem.ToString());
-            sqlCommand1.Parameters.AddWithValue("@help_czas_do", plan_dnia2.SelectedItem.ToString());
-            sqlCommand1.Parameters.AddWithValue("@dzien", plan_dnia3.SelectedItem.ToString());
-            
-            int exist_help = (int)sqlCommand1.ExecuteScalar();
-            
-            if (exist_help>0)
-            {
-                MessageBox.Show("Masz juz coś zaplanowane o tej godzinie!");
-            }
-            
-            else
-            {
-                sql = "INSERT INTO Czas(Czas_Od,Czas_Do,Czynnosc,Uzytkownik,Dzien)" +
-               "VALUES (@czas_o,@czas_d,@czyn,@mw_userID,@dzien)";
-                SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-                sqlCommand.Parameters.AddWithValue("@czas_o", plan_dnia.SelectedItem.ToString());
-                sqlCommand.Parameters.AddWithValue("@czas_d", plan_dnia2.SelectedItem.ToString());
-                sqlCommand.Parameters.AddWithValue("@czyn", text3.Text);
-                sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
-                sqlCommand.Parameters.AddWithValue("@dzien", plan_dnia3.SelectedItem.ToString());
-                sqlCommand.ExecuteNonQuery();
-                sqlConnection.Close();
-            }
-
-            sqlConnection.Close();
-        }
-
-   
     }
 }

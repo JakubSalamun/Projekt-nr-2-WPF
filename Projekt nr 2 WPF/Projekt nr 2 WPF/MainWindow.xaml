@@ -22,6 +22,8 @@
         <ComboBox x:Name="plan_dnia3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="385,112,0,0" SelectionChanged="plan_dnia3_SelectionChanged"/>
         <Label x:Name="help_select_day_2" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="567,136,0,0"/>
         <Button Content="Usuń" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="657,116,0,0" Click="Delete_click"/>
+        <Label Content="1) Prosze w pierwszej kolejności wybrać przedział czasowy dla docelowego dnia tygodnia" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="79,20,0,0"/>
+        <Label Content="2) Prosze podać czynność w danym przedziale" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="79,46,0,0"/>
 
     </Grid>
 </Window>
