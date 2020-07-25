@@ -59,25 +59,13 @@ namespace Projekt_nr_2_WPF
                             MainWindow mainWindow = new MainWindow();
                             mainWindow.Show();
                             this.Hide();
-                            if (better.IsChecked == true)
-                            {
-                                MessageBox.Show("Oby tak dalej");
-                            }
-                            if (bad.IsChecked == true)
-                            {
-                                MessageBox.Show("Dziś będzie lepiej");
-                            }
-                            if (ok.IsChecked == true)
-                            {
-                                MessageBox.Show("Witamy ^.^ ");
-                            }
-
 
                         }
                         else
                         {
                             MessageBox.Show("Nieprawidłowe dane logowania!");
                             userID.Text = "";
+                            userPassword.Password = "";
                             
                         }
                     }
