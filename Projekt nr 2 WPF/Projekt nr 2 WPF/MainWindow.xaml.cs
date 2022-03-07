@@ -146,12 +146,13 @@ namespace Projekt_nr_2_WPF
             dt = dataTable;
             plan_dnia_dgv.ItemsSource = dt.DefaultView;
             sqlConnection.Close();
-        }
-        private void poniedzialek()
+        }    
+
+        private void day(string day)
         {
             sqlConnection.Open();
             DataTable dataTable = new DataTable();
-            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Monday'";
+            sql = $"select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='{day}'";
             SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
@@ -160,97 +161,6 @@ namespace Projekt_nr_2_WPF
             dt = dataTable;
             plan_dnia_dgv_1.ItemsSource = dt.DefaultView;
             sqlConnection.Close();
-
-        }
-        private void wtorek()
-        {
-            sqlConnection.Open();
-            DataTable dataTable = new DataTable();
-            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Tuesday'";
-            SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
-
-            dataAdapter.Fill(dataTable);
-            dt = dataTable;
-            plan_dnia_dgv_1.ItemsSource = dt.DefaultView;
-            sqlConnection.Close();
-
-        }
-        private void sroda()
-        {
-            sqlConnection.Open();
-            DataTable dataTable = new DataTable();
-            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Wednesday'";
-            SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
-
-            dataAdapter.Fill(dataTable);
-            dt = dataTable;
-            plan_dnia_dgv_1.ItemsSource = dt.DefaultView;
-            sqlConnection.Close();
-
-        }
-        private void czwartek()
-        {
-            sqlConnection.Open();
-            DataTable dataTable = new DataTable();
-            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Thursday'";
-            SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
-
-            dataAdapter.Fill(dataTable);
-            dt = dataTable;
-            plan_dnia_dgv_1.ItemsSource = dt.DefaultView;
-            sqlConnection.Close();
-
-        }
-        private void piatek()
-        {
-            sqlConnection.Open();
-            DataTable dataTable = new DataTable();
-            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Friday'";
-            SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
-
-            dataAdapter.Fill(dataTable);
-            dt = dataTable;
-            plan_dnia_dgv_1.ItemsSource = dt.DefaultView;
-            sqlConnection.Close();
-
-        }
-        private void sobota()
-        {
-            sqlConnection.Open();
-            DataTable dataTable = new DataTable();
-            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Saturday'";
-            SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
-
-            dataAdapter.Fill(dataTable);
-            dt = dataTable;
-            plan_dnia_dgv_1.ItemsSource = dt.DefaultView;
-            sqlConnection.Close();
-
-        }
-        private void niedziela()
-        {
-            sqlConnection.Open();
-            DataTable dataTable = new DataTable();
-            sql = "select [idPoryDnia],[Czas_Od],[Czas_Do],[Czynnosc] from Czas where Uzytkownik=@mw_userID and Dzien='Sunday'";
-            SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@mw_userID", mw_userID);
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
-
-            dataAdapter.Fill(dataTable);
-            dt = dataTable;
-            plan_dnia_dgv_1.ItemsSource = dt.DefaultView;
-            sqlConnection.Close();
-
         }
 
 
@@ -346,37 +256,45 @@ namespace Projekt_nr_2_WPF
         {
             if (plan_dnia3.SelectedIndex == (0))
             {
-                poniedzialek();
+                //poniedzialek();
+                day("Monday");
                 help_select_day.Content = "Poniedziałek";
             }
             if (plan_dnia3.SelectedIndex == (1))
             {
-                wtorek();
+                //wtorek();
+                day("Tuesday");
                 help_select_day.Content = "Wtorek";
             }
             if (plan_dnia3.SelectedIndex == (2))
             {
-                sroda();
+                //sroda();
+                day("Wednesday");
+      
                 help_select_day.Content = "Środa";
             }
             if (plan_dnia3.SelectedIndex == (3))
             {
-                czwartek();
+                //czwartek();
+                day("Thursday");
                 help_select_day.Content = "Czwartek";
             }
             if (plan_dnia3.SelectedIndex == (4))
             {
-                piatek();
+                //piatek();
+                day("Friday");
                 help_select_day.Content = "Piątek";
             }
             if (plan_dnia3.SelectedIndex == (5))
             {
-                sobota();
+                //sobota();
+                day("Saturday");
                 help_select_day.Content = "Sobota";
             }
             if (plan_dnia3.SelectedIndex == (6))
             {
-                niedziela();
+                //niedziela();
+                day("Sunday");
                 help_select_day.Content = "Niedziela";
             }
 
